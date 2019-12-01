@@ -115,16 +115,24 @@ int SyntacticalAnalyzer::define ()
 		      return errors;
 		    }
 		  else{
+		    //		    lex->ReportError("Missing: right parenthesis\n");
 		    errors++;
+		  }
 		}
-	      else
-        	errors++;
+	      else{
+		//		lex->ReportError("Missing: right parenthesis\n");
+		errors++;
+	      }
 	    }
-	  else
+	  else{
+	    //  lex->ReportError("Missing: identifier\n");	
 	    errors++;
+	  }
 	}
-      else
+      else{
+	//	lex->ReportError("Missing: keyword define\n");
 	errors++;
+      }
     }
   else
     errors++;
@@ -163,7 +171,7 @@ int SyntacticalAnalyzer::stmt ()
       t = lex->GetToken();
       if(t == DEFINE_T)
 	{ // Had to add a rule since grammar did not support in-function function definitions... Rule simply loops back to more_defines()
-	  p2out << "Using Rule 82\n";
+	  p2out << "Using Rule 6\n"; //Was Rule 82
 	  errors += more_defines();
 	}
       errors += action();

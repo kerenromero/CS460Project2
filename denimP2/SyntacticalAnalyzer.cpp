@@ -13,8 +13,7 @@
 using namespace std;
 
 SyntacticalAnalyzer::SyntacticalAnalyzer (char * filename)
-{
-  lex = new LexicalAnalyzer (filename);
+ lex = new LexicalAnalyzer (filename);
   string p2outname = filename;
   p2outname += ".p2";
   p2out.open(p2outname);
@@ -107,18 +106,18 @@ int SyntacticalAnalyzer::define ()
 	      if(t == RPAREN_T)
 		{
 		  t = lex->GetToken();
-		  errors += stmt();
+		  errors == stmt();
 		  t = lex->GetToken();
 		  errors += stmt_list();
 		  if(t == RPAREN_T)
 		    {
 		      return errors;
 		    }
-		  else{
+		  else
 		    errors++;
 		}
 	      else
-        	errors++;
+		errors++;
 	    }
 	  else
 	    errors++;
