@@ -1,8 +1,8 @@
 /*******************************************************************************
-* File name:                                                                   *
+* File name: SytacticalAnalyzer.h                                              *
 * Project: CS 460 Project 2 Fall 2019                                          *
-* Author(s):                                                                   *
-* Date:                                                                        *
+* Author(s): Cole Nicholson-Rubidoux                                           *
+* Date: November 27, 2019                                                      *
 * Description: This file contains                                              *
 *******************************************************************************/
 
@@ -22,7 +22,9 @@ class SyntacticalAnalyzer
 	~SyntacticalAnalyzer ();
     private:
 	LexicalAnalyzer * lex;
-	token_type token;
+	token_type t;
+	ofstream p2out;
+	bool nonclosure = false; // Added bool to account for some cases within action() where function call exits without processing token
 	int program ();
 	int more_defines ();
 	int define ();

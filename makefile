@@ -11,15 +11,15 @@ SyntacticalAnalyzer.o : SyntacticalAnalyzer.cpp SyntacticalAnalyzer.h LexicalAna
 	g++ -g -c SyntacticalAnalyzer.cpp
 
 clean : 
-	rm [SP]*.o P2.out *.gch
+	rm [SP]*.o P2.out *.gch *.lst *.p1 *.dbg *.ss.p2 *~
 
 submit : Project2.cpp LexicalAnalyzer.h SyntacticalAnalyzer.h SyntacticalAnalyzer.cpp makefile README.txt
-	rm -rf DenimP2
-	mkdir DenimP2
-	cp Project2.cpp DenimP2
-	cp SyntacticalAnalyzer.h DenimP2
-	cp SyntacticalAnalyzer.cpp DenimP2
-	cp makefile DenimP2
-	cp README.txt DenimP2
-	tar cfvz DenimP2.tgz DenimP2
-	cp DenimP2.tgz ~tiawatts/cs460drop
+	rm -rf TeamNameP2
+	mkdir TeamNameP2
+	cp Project2.cpp TeamNameP2
+	cp SyntacticalAnalyzer.h TeamNameP2
+	cp SyntacticalAnalyzer.cpp TeamNameP2
+	cp makefile TeamNameP2
+	cp README.txt TeamNameP2
+	tar cfvz TeamNameP2.tgz TeamNameP2
+	cp TeamNameP2.tgz ~tiawatts/cs460drop

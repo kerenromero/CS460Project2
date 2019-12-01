@@ -1,0 +1,32 @@
+(define (square_root n)
+;Returns the square root of the value with percision(5) for non-negative numerics
+  (if (number? n)
+      (if (< n 0)
+	  'square_root_can_only_calculate_for_non_negative_numbers
+	  (if (zero? n)
+	      '0
+	      (squareRoot(/ n 2.0) n)
+	      )
+	  )
+      'square_root_requires_a_numeric_argument
+      )
+  )
+(define (flatten lst)
+  (if (null? lst)
+      '()
+      (if (list? (car lst))
+	  (append (flatten (car lst)) (flatten (cdr lst)))
+	  (cons (car lst) (flatten (cdr lst))))))
+(define (numbers_only lst)
+;Returns a list of only the numeric elements
+  (define (n2 lst)
+    (if (null? lst)
+	'()
+	(if (number? (car lst))
+	    (cons (car lst) (numbers_only (cdr lst)))
+	    (numbers_only (cdr lst))
+	    )
+	)
+    )
+  (n2 (flatten lst))
+  )
