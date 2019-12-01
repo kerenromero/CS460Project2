@@ -14,12 +14,12 @@ clean :
 	rm [SP]*.o P2.out *.gch *.lst *.p1 *.dbg *.ss.p2 *~
 
 submit : Project2.cpp LexicalAnalyzer.h SyntacticalAnalyzer.h SyntacticalAnalyzer.cpp makefile README.txt
-	rm -rf TeamNameP2
-	mkdir TeamNameP2
-	cp Project2.cpp TeamNameP2
-	cp SyntacticalAnalyzer.h TeamNameP2
-	cp SyntacticalAnalyzer.cpp TeamNameP2
-	cp makefile TeamNameP2
-	cp README.txt TeamNameP2
-	tar cfvz TeamNameP2.tgz TeamNameP2
-	cp TeamNameP2.tgz ~tiawatts/cs460drop
+	rm -rf denimP2
+	mkdir denimP2
+	cp Project2.cpp denimP2
+	cp SyntacticalAnalyzer.h denimP2
+	cp SyntacticalAnalyzer.cpp denimP2
+	cp makefile denimP2
+	cp README.txt denimP2
+	tar cfvz denimP2.tgz denimP2
+	cp denimP2.tgz ~tiawatts/cs460drop
