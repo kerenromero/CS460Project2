@@ -46,14 +46,20 @@ int SyntacticalAnalyzer::program ()
 	    {
 	      return errors;
 	    }
-	  else
+	  else{
+	    lex->ReportError("End of File Expected\n");
 	    errors++;
+	  }
 	}
-      else
+      else{
+	lex->ReportError("Error: Expected '(' \n");
 	errors++;
+      }
     }
-  else
+  else{
+    lex->ReportError("Error: Expected '(' \n");
     errors++;
+  }
   return errors;
 }
 
