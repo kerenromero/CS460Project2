@@ -196,16 +196,20 @@ int SyntacticalAnalyzer::stmt ()
 	{
 	  return errors;
 	}
-      else
+      else{
+	lex->ReportError("Error: Expected ')'\n");
 	errors++;
+      }
     }
   else if(t == NUMLIT_T || t == STRLIT_T || t == SQUOTE_T)
     {
       p2out << "Using Rule 7\n";
       errors += literal();
     }
-  else
+  else{
+    lex->ReportError("Error: Expected ')' or identifier\n");
     errors++;
+  }
   return errors;
 }
 
@@ -229,8 +233,10 @@ int SyntacticalAnalyzer::literal ()
       errors += quoted_lit();
       return errors;
     }
-  else
+  else{
+    lex->ReportError("Error: Expected numeric, string, or single quote\n");
     errors++;
+  }
   return errors;
 }
 
@@ -323,8 +329,10 @@ int SyntacticalAnalyzer::stmt_pair_body ()
 	{
 	  return errors;
 	}
-      else
+      else{
+	lex->ReportError("Error: Expected else\n");
 	errors++;
+      }
     }
   else if(t == IDENT_T || t == LPAREN_T || t == NUMLIT_T || t == STRLIT_T || t == SQUOTE_T)
     {
@@ -338,11 +346,15 @@ int SyntacticalAnalyzer::stmt_pair_body ()
 	  t = lex->GetToken();
 	  errors += stmt_pair();
 	}
-      else
+      else{
+	lex->ReportError("Error: Expected ')'\n");
 	errors++;
+      }
     }
-  else
+  else{
+    lex->ReportError("Error: Expected input not found \n");
     errors++;
+  }
   return errors;
 }
 
@@ -532,8 +544,10 @@ int SyntacticalAnalyzer::action ()
       p2out << "Using Rule 49\n";
       return errors;
     }
-  else
+  else{
+    lex->ReportError("Error: Expected operator \n");
     errors++;
+  }
   return errors;
 }
 
@@ -547,8 +561,10 @@ int SyntacticalAnalyzer::any_other_token ()
       errors += more_tokens();
       if(t == RPAREN_T)
 	return errors;
-      else
+      else{
+	lex->ReportError("Error: Expected ')'\n");
 	return errors++;
+      }
     }
   else if(t == SQUOTE_T)
     {
@@ -676,8 +692,10 @@ int SyntacticalAnalyzer::any_other_token ()
     {
       p2out << "Using Rule 81\n";
     }
-  else
+  else{
+    lex->ReportError("Error: Expected operator\n");
     errors++;
+  }
   return errors;
 }
 
