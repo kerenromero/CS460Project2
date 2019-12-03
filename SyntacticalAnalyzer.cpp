@@ -75,8 +75,10 @@ int SyntacticalAnalyzer::more_defines ()
 	{
 	  return errors;
 	}
-      else
+      else{
+	lex->ReportError("Error: Expected ')'\n");
 	errors++;
+      }
     }
   else if(t == DEFINE_T)
     {
@@ -88,11 +90,15 @@ int SyntacticalAnalyzer::more_defines ()
 	  t = lex->GetToken();
 	  errors += more_defines();
 	}
-      else
+      else{
+	lex->ReportError("Error: Expected '('\n");
 	errors++;
+      }
     }
-  else
+  else{
+    lex->ReportError("Error: Expected define\n");
     errors++;
+  }
   return errors;
 }
 
@@ -116,24 +122,33 @@ int SyntacticalAnalyzer::define ()
 		  errors += stmt();
 		  t = lex->GetToken();
 		  errors += stmt_list();
-		  if(t == RPAREN_T)
-		    {
-		      return errors;
-		    }
+		  if(t == RPAREN_T){
+		    return errors;
+		  }
 		  else{
+		    lex->ReportError("Error: Expected ')'\n");
 		    errors++;
+		  }
 		}
-	      else
-        	errors++;
+	      else{
+		lex->ReportError("Error: Expected ')'\n");
+		errors++;
+	      }
 	    }
-	  else
+	  else{
+	    lex->ReportError("Error: Expected identifier\n");
 	    errors++;
+	  }
 	}
-      else
+      else{
+	lex->ReportError("Error: Expected '('\n");
 	errors++;
+      }
     }
-  else
+  else{
+    lex->ReportError("Error: Expected define\n");
     errors++;
+  }
   return errors;
 }
 
