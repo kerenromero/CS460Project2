@@ -14,11 +14,14 @@ using namespace std;
 
 SyntacticalAnalyzer::SyntacticalAnalyzer (char * filename)
 {
+  string name = filename;
   lex = new LexicalAnalyzer (filename);
   string p2outname = filename;
   p2outname += ".p2";
   p2out.open(p2outname);
   int totalErrors = program ();
+  token_type t;
+  int errors = program();
 }
 
 SyntacticalAnalyzer::~SyntacticalAnalyzer ()
@@ -32,6 +35,10 @@ int SyntacticalAnalyzer::program ()
   int errors = 0;
   p2out << "Using Rule 1\n";
   t = lex->GetToken();
+  string token = lex->GetToken(t)
+  lexeme = lex->GetLexeme();
+  p2file << "Entering Program function; current token is: " << tok << ", lexeme: " << lexeme << endl;
+
   if(t == LPAREN_T)
     {
       t = lex->GetToken();
@@ -39,6 +46,7 @@ int SyntacticalAnalyzer::program ()
       t = lex->GetToken();
       if(t == LPAREN_T)
 	{
+	  p2file << "Using Rule 1\n";
 	  t = lex->GetToken();
 	  errors += more_defines();
 	  t = lex->GetToken();
@@ -47,17 +55,17 @@ int SyntacticalAnalyzer::program ()
 	      return errors;
 	    }
 	  else{
-	    lex->ReportError("End of File Expected\n");
+	  lex->ReportError ("left parenthesis expected, '" + lex->GetTokenName(token) + "' found.");
 	    errors++;
 	  }
 	}
       else{
-	lex->ReportError("Error: Expected '(' \n");
+	  lex->ReportError ("EOF token expected, '" + lex->GetTokenName(token) + "' found.");
 	errors++;
       }
     }
   else{
-    lex->ReportError("Error: Expected '(' \n");
+      lex->ReportError ("left parenthesis expected, '" + lex->GetTokenName(token) + "' found.");
     errors++;
   }
   return errors;
@@ -65,6 +73,8 @@ int SyntacticalAnalyzer::program ()
 
 int SyntacticalAnalyzer::more_defines ()
 {
+  string token = lex->GetToken(t)
+  lexeme = lex->GetLexeme();
   int errors = 0;
   if(t == IDENT_T)
     {
@@ -76,7 +86,7 @@ int SyntacticalAnalyzer::more_defines ()
 	  return errors;
 	}
       else{
-	lex->ReportError("Error: Expected ')'\n");
+	  lex->ReportError ("right parenthesis expected, '" + lex->GetTokenName(token) + "' found.");
 	errors++;
       }
     }
@@ -88,15 +98,15 @@ int SyntacticalAnalyzer::more_defines ()
       if(t == LPAREN_T)
 	{
 	  t = lex->GetToken();
-	  errors += more_defines();
+	  lex->ReportError ("left parenthesis expected, '" + lex->GetTokenName(token) + "' found.");
 	}
       else{
-	lex->ReportError("Error: Expected '('\n");
+      lex->ReportError ("IDENT_T or DEFINE_T expected, '" + lex->GetTokenName(token) + "' found.");
 	errors++;
       }
     }
   else{
-    lex->ReportError("Error: Expected define\n");
+      lex->ReportError ("IDENT_T or DEFINE_T expected, '" + lex->GetTokenName(token) + "' found.");
     errors++;
   }
   return errors;
@@ -126,27 +136,31 @@ int SyntacticalAnalyzer::define ()
 		    return errors;
 		  }
 		  else{
-		    lex->ReportError("Error: Expected ')'\n");
+		   lex->ReportError ("right parenthesis expected, '" + lex->GetTokenName(token) + "' found.");
+
 		    errors++;
 		  }
 		}
 	      else{
-		lex->ReportError("Error: Expected ')'\n");
+	        lex->ReportError ("right parenthesis expected, '" + lex->GetTokenName(token) + "' found.");
+
 		errors++;
 	      }
 	    }
 	  else{
-	    lex->ReportError("Error: Expected identifier\n");
+	    lex->ReportError ("IDENT_T token expected, '" + lex->GetTokenName(token) + "' found.");
+
 	    errors++;
 	  }
 	}
       else{
-	lex->ReportError("Error: Expected '('\n");
+        lex->ReportError ("left parenthesis expected, '" + lex->GetTokenName(token) + "' found.");
+
 	errors++;
       }
     }
   else{
-    lex->ReportError("Error: Expected define\n");
+      lex->ReportError ("DEFINE_T token expected, '" + lex->GetTokenName(token) + "' found.");
     errors++;
   }
   return errors;
@@ -154,6 +168,9 @@ int SyntacticalAnalyzer::define ()
 
 int SyntacticalAnalyzer::stmt_list ()
 { // Has branching non leaf
+  string token = lex->GetTokenName(t)
+  lexeme = lex->GetLexeme();
+
   int errors = 0;
   if(t == IDENT_T || t == LPAREN_T || t == NUMLIT_T || t == STRLIT_T || t == SQUOTE_T) // if(stmt)
     {
@@ -173,6 +190,8 @@ int SyntacticalAnalyzer::stmt_list ()
 int SyntacticalAnalyzer::stmt ()
 {
   int errors = 0;
+  string token = lex->GetTokenName(t)
+  lexeme = lex->GetLexeme();
   if(t == IDENT_T)
     {
       p2out << "Using Rule 8\n";
@@ -207,7 +226,8 @@ int SyntacticalAnalyzer::stmt ()
       errors += literal();
     }
   else{
-    lex->ReportError("Error: Expected ')' or identifier\n");
+   lex->ReportError ("right parenthesis expected, '" + lex->GetTokenName(token) + "' found.");
+
     errors++;
   }
   return errors;
